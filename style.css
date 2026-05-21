@@ -1,0 +1,286 @@
+/* ================= IDENTITY DESIGN ENGINE SYSTEM ================= */
+:root {
+    --bg-primary: #f4f5f7;
+    --bg-secondary: rgba(255, 255, 255, 0.9);
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --accent: #000000;
+    --neon-glow: rgba(0, 0, 0, 0.05);
+    --neon-border: rgba(0, 0, 0, 0.05);
+    --glass-bg: #ffffff;
+    --glass-border: rgba(0, 0, 0, 0.08);
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    --skeleton-bg: #e2e8f0;
+    --skeleton-shine: rgba(255, 255, 255, 0.6);
+    --cursor-color: rgba(0, 0, 0, 0.4);
+    --wa-color: #25D366;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #030303;
+    --bg-secondary: rgba(5, 5, 5, 0.8);
+    --text-main: #ffffff;
+    --text-muted: #8892b0;
+    --accent: #00f0ff;
+    --accent-secondary: #b500ff;
+    --neon-glow: rgba(0, 240, 255, 0.15);
+    --neon-border: rgba(181, 0, 255, 0.2);
+    --glass-bg: #0a0a0f; 
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --card-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    --skeleton-bg: #0f0f13;
+    --skeleton-shine: rgba(0, 240, 255, 0.05);
+    --cursor-color: rgba(0, 240, 255, 0.5);
+}
+
+/* ================= SYSTEM RESET ================= */
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+body {
+    font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-main);
+    overflow-x: hidden; min-height: 100vh;
+    background-image: radial-gradient(circle at 50% -20%, rgba(0, 240, 255, 0.06), transparent 50%),
+                      radial-gradient(circle at 50% 120%, rgba(181, 0, 255, 0.04), transparent 50%);
+    background-attachment: fixed;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 10px; }
+
+/* ================= CORE SYSTEM INTERACTIVE LAYER ================= */
+.cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 100005; pointer-events: none; }
+.cursor-dot { width: 6px; height: 6px; background-color: var(--accent); }
+.cursor-outline { width: 40px; height: 40px; border: 1px solid var(--cursor-color); transition: width 0.15s, height 0.15s; }
+.scroll-progress { position: fixed; top: 0; left: 0; width: 0%; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-secondary)); z-index: 100000; }
+
+/* ================= CHRONO GOLD LAUNCH LOADER ================= */
+#loader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg-primary); display: flex; justify-content: center; align-items: center; z-index: 99999; }
+.loader-content { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.loader-icon { font-size: 3.8rem; color: #FFD700; animation: pulseGoldIcon 1.2s infinite alternate ease-in-out; }
+.loader-text { font-size: 1.3rem; font-weight: 700; text-transform: uppercase; background: linear-gradient(90deg, #ffffff, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: fadeInGoldText 1s ease forwards 0.2s; }
+.loader-wave-container { display: flex; align-items: center; gap: 6px; height: 30px; margin-top: 10px; }
+.wave-bar { width: 4px; height: 8px; background: linear-gradient(180deg, #FFD700, #FFA500); border-radius: 4px; animation: luxuryWave 1s ease-in-out infinite; }
+.wave-bar:nth-child(1) { animation-delay: 0.1s; } .wave-bar:nth-child(2) { animation-delay: 0.2s; } .wave-bar:nth-child(3) { animation-delay: 0.3s; } .wave-bar:nth-child(4) { animation-delay: 0.4s; } .wave-bar:nth-child(5) { animation-delay: 0.5s; } .wave-bar:nth-child(6) { animation-delay: 0.6s; }
+@keyframes pulseGoldIcon { 0% { transform: scale(0.9); } 100% { transform: scale(1.05); } }
+@keyframes fadeInGoldText { to { opacity: 1; letter-spacing: 5px; } }
+@keyframes luxuryWave { 0%, 100% { height: 8px; opacity: 0.4; } 50% { height: 28px; opacity: 1; } }
+
+/* ================= NAVIGATION BAR DESIGNATOR ================= */
+header {
+    position: sticky; top: 0; padding: 15px 5%; background: var(--bg-secondary);
+    border-bottom: 1px solid var(--glass-border); z-index: 100; display: flex; justify-content: space-between; align-items: center;
+}
+.logo { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px; display: flex; align-items: center; gap: 8px; background: linear-gradient(90deg, var(--text-main), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.logo i { color: var(--accent); -webkit-text-fill-color: initial; }
+.theme-toggle { background: none; border: none; color: var(--text-main); font-size: 1.2rem; }
+
+/* ================= SEGMENTED SIDE-SCROLL CONTROL ================= */
+.filters-section { padding: 15px 5%; display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; }
+.search-box { position: relative; width: 100%; max-width: 600px; }
+.search-box input {
+    width: 100%; padding: 14px 24px 14px 45px; background: var(--glass-bg); border: 1px solid var(--glass-border);
+    border-radius: 16px; color: var(--text-main); font-size: 0.95rem; font-family: inherit; outline: none; box-shadow: var(--card-shadow);
+}
+.search-box input:focus { border-color: var(--accent); box-shadow: 0 0 20px var(--neon-glow); }
+.search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 1.1rem; }
+
+.category-segmented-control { 
+    display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important; 
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50px; 
+    padding: 6px; gap: 4px; box-shadow: var(--card-shadow); 
+    width: 100% !important; max-width: 600px; 
+    overflow-x: auto !important; scroll-behavior: smooth; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; -ms-overflow-style: none;
+}
+.category-segmented-control::-webkit-scrollbar { display: none !important; }
+
+.seg-btn { 
+    padding: 10px 24px; background: transparent; border: none; border-radius: 40px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; 
+    white-space: nowrap !important; display: inline-block; transition: background-color 0.3s, color 0.3s;
+}
+.seg-btn:hover { color: var(--text-main); }
+.seg-btn.active { background: var(--text-main); color: var(--bg-primary); }
+[data-theme="dark"] .seg-btn.active { background: var(--accent); color: #000; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); }
+
+/* ================= 2-COLUMN VIEWPORT GRID SYSTEM ================= */
+main { padding: 5px 5% 40px; min-height: 50vh; }
+.grid { display: grid; grid-template-columns: repeat(2, 1fr) !important; gap: 20px; max-width: 1100px; margin: 0 auto; }
+.empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; color: var(--text-muted); display: none; }
+.empty-state i { font-size: 3rem; margin-bottom: 10px; opacity: 0.5; }
+
+/* ================= EXPERT GRADE PRODUCT CARDS SYSTEM ================= */
+.card {
+    background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 12px;
+    box-shadow: var(--card-shadow); position: relative; display: flex; flex-direction: column; gap: 12px;
+    opacity: 0; transform: translateZ(0); backface-visibility: hidden; will-change: transform, opacity;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s ease;
+    
+    /* MUST remain hidden so the absolute vertical badge crops perfectly on left/right side boundaries */
+    overflow: hidden !important; 
+}
+.card:hover { border-color: var(--accent-secondary); box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: translateY(-5px); }
+
+/* Dynamic Image Housing */
+.card-image-wrapper { 
+    width: 100%; height: 260px; border-radius: 16px; overflow: hidden; position: relative; 
+    z-index: 1;
+}
+.card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.card:hover img { transform: scale(1.05); }
+
+/* ================= MULTI-COLOR VERTICAL ACCENT BADGES (SCREENSHOT SPEC) ================= */
+.card-category-badge {
+    position: absolute; 
+    top: 25px; 
+    right: -4px; /* Perfectly clings to the exact right border edge of the inner card */
+    z-index: 10;
+    
+    /* Rotates typography dynamically into a vertical structural band matching the reference image */
+    transform: rotate(90deg) translateY(-50%);
+    transform-origin: right top;
+    
+    padding: 7px 18px;
+    /* Clean aerodynamic edge mechanics */
+    border-radius: 0px 0px 14px 14px; 
+    font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;
+    box-shadow: -4px 4px 15px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    color: #ffffff;
+}
+
+/* HIGH FIDELITY VARIABLE MULTI-COLOR ENGINES (MAPS DYNAMIC DATA HUES) */
+.card[data-cat="audio"] .card-category-badge { background: linear-gradient(135deg, #00f0ff, #0072ff); text-shadow: 0 0 8px rgba(0,240,255,0.6); }
+.card[data-cat="keyboards"] .card-category-badge { background: linear-gradient(135deg, #b500ff, #7100b3); text-shadow: 0 0 8px rgba(181,0,255,0.6); }
+.card[data-cat="skincare"] .card-category-badge { background: linear-gradient(135deg, #ff0055, #990033); }
+.card[data-cat="makeup"] .card-category-badge { background: linear-gradient(135deg, #ff9900, #b36b00); }
+.card[data-cat="wearables"] .card-category-badge { background: linear-gradient(135deg, #00ff66, #00993d); color: #000; font-weight: 800; }
+.card[data-cat="displays"] .card-category-badge { background: linear-gradient(135deg, #33333f, #111115); border: 1px solid rgba(255,255,255,0.1); }
+.card[data-cat="laptops"] .card-category-badge { background: linear-gradient(135deg, #00e5ff, #00aabf); color: #000; }
+.card[data-cat="cameras"] .card-category-badge { background: #16161a; border-left: 2px solid #ff0055; } /* Dark premium accent */
+.card[data-cat="drones"] .card-category-badge { background: linear-gradient(135deg, #7b2cbf, #5a189a); }
+
+/* ================= RE-CONFIGURED PERFORMANCE PRODUCT CARDS ================= */
+.card {
+    background: var(--glass-bg); 
+    border: 1px solid var(--glass-border); 
+    border-radius: 24px; 
+    padding: 12px;
+    box-shadow: var(--card-shadow); 
+    position: relative; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px;
+    opacity: 0; 
+    transform: translateZ(0); 
+    backface-visibility: hidden; 
+    will-change: transform, opacity;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.4s ease;
+    
+    /* Changed back to hidden so image wrapper edges look clean, but elements stay inside boundaries */
+    overflow: hidden !important; 
+}
+.card:hover { border-color: var(--accent-secondary); box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: translateY(-5px); }
+
+/* Dynamic Image Housing */
+.card-image-wrapper { 
+    width: 100%; 
+    height: 260px; 
+    border-radius: 16px; 
+    overflow: hidden; 
+    position: relative; 
+    z-index: 1;
+}
+.card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.card:hover img { transform: scale(1.05); }
+
+/* ================= THE PERFECT SIDE-CLUNG BADGE ENGINE (FIXED DISPLAY BUG) ================= */
+.card-category-badge {
+    position: absolute; 
+    top: 15px; 
+    right: 0; /* Right edge par chipak gaya bina cut hue */
+    z-index: 10;
+    
+    /* Multi-color content text presentation (Sleek pill look like NARS format) */
+    padding: 6px 14px;
+    border-radius: 20px 0px 0px 20px; /* Only left edges are curved for that clinging tab effect */
+    font-size: 0.65rem; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    box-shadow: -2px 4px 10px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    color: #ffffff;
+    
+    /* Hardware acceleration rules */
+    transform: none !important; /* Rotation removed to fix the invisible text bug permanently */
+}
+
+/* THE PREMIUM COLOR MATRIX MAP */
+.card[data-cat="hair"] .card-category-badge { background: linear-gradient(270deg, #0072ff, #00f0ff); text-shadow: 0 0 5px rgba(0,240,255,0.5); }
+.card[data-cat="keyboards"] .card-category-badge { background: linear-gradient(270deg, #7100b3, #b500ff); text-shadow: 0 0 5px rgba(181,0,255,0.5); }
+.card[data-cat="accessories"] .card-category-badge { background: linear-gradient(270deg, #990033, #ff0055); }
+.card[data-cat="furniture"] .card-category-badge { background: linear-gradient(270deg, #b36b00, #ff9900); }
+.card[data-cat="wearables"] .card-category-badge { background: linear-gradient(270deg, #00993d, #00ff66); color: #000; font-weight: 800; }
+.card[data-cat="displays"] .card-category-badge { background: linear-gradient(270deg, #111115, #33333f); border: 1px solid rgba(255,255,255,0.05); }
+.card[data-cat="laptops"] .card-category-badge { background: linear-gradient(270deg, #00aabf, #00e5ff); color: #000; }
+.card[data-cat="cameras"] .card-category-badge { background: #16161a; border-left: 2px solid #ff0055; } 
+.card[data-cat="drones"] .card-category-badge { background: linear-gradient(270deg, #5a189a, #7b2cbf); }
+
+/* Responsive Adjustments for Mobile Devices */
+@media (max-width: 768px) {
+    .card-category-badge {
+        top: 12px;
+        padding: 5px 10px;
+        font-size: 0.58rem;
+    }
+}
+
+
+/* ================= FOOTER MECHANICS ================= */
+.minimal-footer { position: relative; padding: 35px 5%; text-align: center; border-top: 1px solid var(--glass-border); margin-top: 40px; clear: both; overflow: hidden; }
+.minimal-footer p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; position: relative; z-index: 5; }
+.minimal-footer .footer-glow { position: absolute; bottom: -60px; left: 50%; transform: translateX(-50%); width: 300px; height: 100px; background: var(--accent); filter: blur(70px); opacity: 0.15; z-index: 1; pointer-events: none; }
+
+/* ================= STRUCTURAL MODAL ACTIONS ================= */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 100002; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; padding: 20px; }
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+.modal-box { position: relative; border-radius: 24px; padding: 30px 30px 40px; max-width: 400px; width: 100%; text-align: center; overflow: hidden; z-index: 1; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); background: var(--bg-primary); }
+.modal-overlay.active .modal-box { transform: scale(1); }
+.modal-box::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(transparent, var(--accent) 15%, var(--accent-secondary) 35%, transparent 60%); animation: spinNeonBorder 3.5s linear infinite !important; z-index: -2; }
+.modal-box::after { content: ''; position: absolute; inset: 2px; background: var(--bg-primary); border-radius: 22px; z-index: -1; }
+.modal-box > * { position: relative; z-index: 5; }
+@keyframes spinNeonBorder { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.modal-image-wrapper { width: 100%; height: 180px; border-radius: 14px; overflow: hidden; margin-bottom: 20px; border: 1px solid var(--glass-border); }
+.modal-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+.modal-title { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+.modal-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 25px; }
+
+.modal-actions-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+.modal-actions-row { display: flex; gap: 12px; width: 100%; }
+.modal-actions-row a, .modal-actions-row button { flex: 1; padding: 12px; border-radius: 12px; font-size: 0.95rem; font-weight: 600; text-decoration: none; display: flex; justify-content: center; align-items: center; border: none; }
+.btn-order { background: var(--text-main); color: var(--bg-primary); font-weight: 700; }
+.btn-cancel { background: transparent; border: 1px solid var(--text-muted) !important; color: var(--text-muted); }
+.btn-wa-bar { width: 100%; padding: 12px; border-radius: 12px; font-size: 0.95rem; font-weight: 600; background: var(--wa-color); color: #fff; text-decoration: none; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+
+/* ================= TRIGGER TOGGLES ================= */
+.floating-wa { position: fixed; bottom: 30px; left: 30px; width: 55px; height: 55px; background: var(--wa-color); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #fff; font-size: 1.8rem; text-decoration: none; box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4); z-index: 99; }
+.back-to-top { position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--text-main); font-size: 1.2rem; opacity: 0; pointer-events: none; z-index: 99; transition: opacity 0.3s; }
+.back-to-top.visible { opacity: 1; pointer-events: auto; }
+
+/* ================= LAYERING SKELETONS ================= */
+.skeleton { background: var(--skeleton-bg); position: relative; overflow: hidden; }
+.skeleton::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, var(--skeleton-shine), transparent); animation: skeletonShine 1.5s infinite; }
+.skeleton-card { border-radius: 24px; padding: 12px; background: var(--glass-bg); border: 1px solid var(--glass-border); }
+.skeleton-img { width: 100%; height: 260px; border-radius: 16px; margin-bottom: 15px; }
+.skeleton-title { height: 24px; border-radius: 6px; width: 60%; margin: 0 auto; }
+@keyframes skeletonShine { 100% { left: 200%; } }
+
+/* ================= SYSTEM MEDIA BOUNDARIES ================= */
+@media (max-width: 768px) {
+    * { cursor: auto !important; } .cursor-dot, .cursor-outline { display: none !important; }
+    .grid { gap: 15px; } .card-image-wrapper { height: 180px; } .card-title { font-size: 0.95rem; }
+    .filters-section { padding: 12px 5%; } .floating-wa, .back-to-top { width: 45px; height: 45px; font-size: 1.4rem; bottom: 20px; }
+    .floating-wa { left: 20px; } .back-to-top { right: 20px; } .modal-box { width: 92%; }
+    /* Responsive balancing for rotated vertical badges on mobile devices */
+    .card-category-badge { top: 20px; padding: 5px 12px; font-size: 0.55rem; letter-spacing: 1px; }
+  }
